@@ -2,15 +2,17 @@ import Elephant from '../../src/components/Elephant';
 
 describe('Elephant', () => {
   let image,
-      onClick,
       text,
-      wrapper;
+      wrapper,
+      onClickSpy;
 
   beforeEach(() => {
+    onClickSpy = jasmine.createSpy('onClick Spy')
     wrapper = mount(
       <Elephant
         image="http://fakeurl.com/elephant"
         text="I am an Elephant!"
+        onClick={onClickSpy}
       />
     );
   });
@@ -30,4 +32,9 @@ describe('Elephant', () => {
       width: '600'
     });
   });
+
+  it('should invoke the onClick function from props when clicked', () => {
+    wrapper.simulate('click');
+    expect(onClickSpy).toHaveBeenCalled();
+  })
 });

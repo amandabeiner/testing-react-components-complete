@@ -5,6 +5,8 @@ describe('ElephantContainer', () => {
   let wrapper;
 
   beforeEach(() => {
+    // spyOn(global, 'fetch').and.callFake('myfakestuff')
+    spyOn(ElephantContainer.prototype, 'handleClick').and.callThrough();
     wrapper = mount(<ElephantContainer />);
   });
 
@@ -39,5 +41,18 @@ describe('ElephantContainer', () => {
 
     expect(pageText).toMatch('that\'s a big elephant');
   });
+
+  describe('handleClick', () => {
+    it('should be invoked when the onClick function of the child Elephant component is called', () => {
+      wrapper.find(Elephant).props().onClick();
+      expect(ElephantContainer.prototype.handleClick).toHaveBeenCalled();
+    })
+    it('should toggle the babyElephant state', () => {
+      debugger;
+      console.log(wrapper)
+      wrapper.find(Elephant).props().onClick();
+      expect(wrapper.state()).toEqual({ babyElephant: true})
+    })
+  })
 
 });
